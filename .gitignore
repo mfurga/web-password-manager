@@ -1,0 +1,15 @@
+*.py[cod]
+__pycache__
+
+# Database
+db.sqlite3
+
+# Visual Studio Code
+.vscode
+.env
+
+# Tests / coverage reports
+.coverage
+
+# Translations
+*.mo
