@@ -4,6 +4,9 @@ __pycache__
 # Database
 db.sqlite3
 
+# Migrations
+migrations/
+
 # Visual Studio Code
 .vscode
 .env
