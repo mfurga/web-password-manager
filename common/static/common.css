@@ -1,0 +1,76 @@
+/**
+ * Web Password Manager
+ */
+
+/* COMMON */
+
+* { margin: 0; padding: 0; }
+
+html { font-size: 14px; }
+
+body { font-family: Verdana, Geneva, sans-serif; }
+
+a { 
+    text-decoration: none; 
+    color: #0071c3;
+    border-bottom: 1px solid #0071c3;
+}
+
+a:hover { background: #0071c3; color: #fff; }
+
+.container { margin: 0 auto; width: 60%; }
+
+.tcenter { text-align: center; }
+
+.fbold { font-weight: bold; }
+
+.fleft { float: left; }
+
+.fright { float: right; }
+
+/* COMMON PADDING & MARGINS */
+
+.p20 { padding: 20px 0; }
+.p20-bottom { padding-bottom: 20px; }
+.p20-top { padding-top: 20px; }
+
+.clear:after { content: ''; display: block; clear: both; }
+
+/* MESSAGES */
+
+.messages li { list-style-type: none; font-weight: bold; }
+
+.messages .success { color: #12b900; }
+.messages .error { color: #d60000; }
+.messages .warning { color: #ffe200; }
+
+.a-success { color: #12b900; border-bottom: 1px solid #12b900;}
+.a-success:hover { color: #fff; background: #12b900; }
+
+.a-error { color: #d60000; border-bottom: 1px solid #d60000; }
+.a-error:hover { color: #fff; background: #d60000; }
+
+/* NAVBAR */
+
+#navbar {
+    width: 100%;
+    padding: 20px 0;
+}
+
+#navbar .navbar-list { list-style-type: none; }
+
+#navbar .navbar-list li { display: inline-block; }
+
+#navbar .navbar-list li:after { content: ' | ' }
+
+#navbar .navbar-list li:last-child:after { content: ''; }
+
+.main .header { padding: 20px 0; }
+
+/* FOOTER */
+
+#footer {
+    margin-top: 40px;
+    border-top: 3px solid #ddd;
+    font-size: .9rem;
+}

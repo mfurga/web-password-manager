@@ -1,0 +1,39 @@
+{% load static %}<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Mateusz Furga">
+    <meta name="keywords" content="web, password, password-manager">
+    <meta name="theme-color" content="#fff">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'common.css' %}">
+
+    <title>{% block title %} &middot; Password Manager{% endblock %}</title>
+
+    {% block head %} {% endblock %}
+</head>
+<body>
+    <nav id="navbar">
+        <div class="container clear">
+            <h1 class="fleft">Web Password Manager</h1>
+            {% if user.is_authenticated %}
+            <ul class="navbar-list fright">
+                <li itemprop="name">{{ request.user }}</li>
+                <li itemprop="name"><a itemprop="url" href="#">new entry</a></li>
+                <li itemprop="name"><a itemprop="url" href="#">logout</a></li>
+            </ul>
+            {% endif %}
+        </div>
+    </nav>
+    {% if messages %}<ul class="messages container">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>{% endif %}
+    {% block content %}{% endblock %}
+    <footer id="footer" class="container tcenter p20">
+        <p>Source code available on <a href="https://github.com/mfurga/web-password-manager">Github</a></p>
+        <p>Web Password Manager by Mateusz Furga</p>
+    </footer>
+</body>
+</html>
