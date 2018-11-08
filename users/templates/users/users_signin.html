@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Sign in {{ block.super }}{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static 'users/users_signin.css' %}">
+{% endblock %}
+
+{% block content %}
+<section id="signin" class="main">
+        <div class="container">
+            <header class="header">
+                <h1 class="title">Signin</h1>
+            </header>
+            <div class="content">
+                <form action="" method="post" class="form">
+                    {% csrf_token %}
+
+                    {% if form.errors %}
+                    <ul class="errors">
+                        {% for k, error in form.errors.items %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    {% for field in form.visible_fields %}
+                    <div class="row">
+                        <ul class="errors">
+                            {% if field.errors %}
+                            {% for error in field.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                            {% endif %}
+                        </ul>
+                        {{ field.label_tag }}
+                        {{ field }}
+                    </div>
+                    {% endfor %}
+                    <div class="row">
+                        <button class="btn" type="submit">Signin</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}
