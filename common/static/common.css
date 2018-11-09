@@ -30,9 +30,13 @@ a:hover { background: #0071c3; color: #fff; }
 
 /* COMMON PADDING & MARGINS */
 
+.p10 { padding: 10px 0; }
+.p10-top { padding-top: 10px; }
+.p10-bottom { padding-bottom: 10px; }
+
 .p20 { padding: 20px 0; }
-.p20-bottom { padding-bottom: 20px; }
 .p20-top { padding-top: 20px; }
+.p20-bottom { padding-bottom: 20px; }
 
 .clear:after { content: ''; display: block; clear: both; }
 
