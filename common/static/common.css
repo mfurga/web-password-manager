@@ -30,6 +30,14 @@ a:hover { background: #0071c3; color: #fff; }
 
 /* COMMON PADDING & MARGINS */
 
+.m10 { margin: 10px 0; }
+.m10-top { margin-top: 10px; }
+.m10-bottom { margin-bottom: 10px; }
+
+.m20 { margin: 20px 0; }
+.m20-top { margin-top: 20px; }
+.m20-bottom { margin-bottom: 20px; }
+
 .p10 { padding: 10px 0; }
 .p10-top { padding-top: 10px; }
 .p10-bottom { padding-bottom: 10px; }
@@ -54,6 +62,24 @@ a:hover { background: #0071c3; color: #fff; }
 .a-error { color: #d60000; border-bottom: 1px solid #d60000; }
 .a-error:hover { color: #fff; background: #d60000; }
 
+/* BUTTONS */
+
+.error { background:#ff2424; }
+.error:hover { background: #f55757; }
+
+.warning { background: #ffa533; }
+.warning:hover { background: #ffb65a; }
+
+.btn { 
+    padding: 4px 5px;
+    font-weight: bold;
+    color: #fff;
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 12px;
+}
+
+.btn:hover { cursor: pointer; }
+
 /* NAVBAR */
 
 #navbar {
@@ -77,4 +103,14 @@ a:hover { background: #0071c3; color: #fff; }
     margin-top: 40px;
     border-top: 3px solid #ddd;
     font-size: .9rem;
+}
+
+/* MOBILE */
+
+@media only screen and (max-width: 1200px) {
+    .container { width: 80%; }
+}
+
+@media only screen and (max-width: 768px) {
+    .container { width: 95%; }
 }
