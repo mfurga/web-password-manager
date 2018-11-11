@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} {{ entry.name }} {{ block.super }}{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static 'entries/entries_detail.css' %}">
+{% endblock %}
+
+{% block content %}
+    <section id="dashboard" class="main">
+        <div class="container">
+            <header class="header clear">
+                <h1 class="title fleft">{{ entry.name }}</h1>
+                <div class="row fright">
+                    <a href="{% url 'entries:update' entry.id %}"><button class="btn warning">Edit the entry</button></a>
+                    <a href="{% url 'entries:delete' entry.id %}"><button class="btn error">Delete the entry</button></a>
+                </div>
+            </header>
+            <div class="content">
+                <div class="row">
+                    <p>
+                        <span class="title">URL:</span>
+                        <a target="_blank" rel="noopener noreferrer" href="{{ entry.url }}">{{ entry.url }}</a>
+                    </p>
+                </div>
+                <div class="row">
+                    <p>
+                        <span class="title">Login: </span>
+                        {{ entry.login }}
+                    </p>
+                </div>
+                <div class="row">
+                    <p>
+                        <span class="title">Password:</span>
+                        <input style="min-width: 200px;" type="password" value="{{ entry.password }}" id="password" disabled>
+                        <a style="font-family: monospace; cursor: pointer;" id="password-button" onclick="showPassword();">show</a>
+                        <a style="font-family: monospace; cursor: pointer;" onclick="copyToClipboard()">copy</a>
+                    </p>
+                </div>
+                <div class="p10-top">
+                    <a href="{% url 'entries:list' %}">&laquo; Home page</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+        function showPassword() {
+            var input = document.getElementById("password");
+            var input_button = document.getElementById("password-button");
+
+            if (input.type === "password") {
+                input.type = "text";
+                input_button.text = "hide";
+            } else {
+                input.type = "password";
+                input_button.text = "show";
+            }
+        }
+
+        function copyToClipboard() {
+            var password = document.getElementById("password").value;
+            
+            var elem = document.createElement("textarea");
+            elem.value = password;
+            elem.style = { position: 'absolute', left: '-9999px' };
+            document.body.appendChild(elem);
+
+            elem.select();
+            document.execCommand("copy");
+            document.body.removeChild(elem);
+        }
+    </script>
+{% endblock %}

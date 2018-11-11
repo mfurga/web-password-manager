@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Delete an entry {{ block.super }}{% endblock %}
+
+{% block content %}
+    <section id="dashboard" class="main">
+        <div class="container">
+            <header class="header">
+                <h1 class="title">Delete an entry</h1>
+            </header>
+            <div class="content">
+                <p>Are you sure you want to delete <strong>{{ entry.name }}</strong> entry?</p>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <button class="btn error m10" type="submit">Delete the entry</button>
+                </form>
+                <a href="{% url 'entries:list' %}">Nope, take me away from here!</a>
+            </div>
+        </div>
+    </section>
+{% endblock %}

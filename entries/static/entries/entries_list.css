@@ -1,0 +1,30 @@
+/**
+ * Web Password Manager
+ */
+
+/* Entries list */
+
+#settings .form label { width: 150px; }
+
+table { width: 100%; }
+
+table, td, th
+{
+    border: 1px solid #ddd;
+    border-collapse: collapse;
+}
+
+td, th { padding: 7px; }
+
+th { background: #f5f5f5; }
+
+tbody tr:hover { background: #f5f5f5; }
+
+#dashboard .content .pagination { list-style-type: none; }
+
+#dashboard .content .pagination li { display: inline-block; padding: 0 5px; }
+
+input {
+    width: 70%;
+    padding: 3px 0 3px 5px;
+}

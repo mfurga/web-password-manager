@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Create a new entry {{ block.super }}{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static 'entries/entries_create.css' %}">
+{% endblock %}
+
+{% block content %}
+    <section id="dashboard" class="main">
+        <div class="container">
+            <header class="header">
+                <h1 class="title">Create a new entry</h1>
+            </header>
+            <div class="content">
+				<form action="" method="post" class="form">
+					{% csrf_token %}
+					{% for field in form.visible_fields %}
+					<div class="row">
+						<ul class="errors">
+							{% if field.errors %}
+							{% for error in field.errors %}
+								<li>{{ error }}</li>
+							{% endfor %}
+							{% endif %}
+						</ul>
+						{{ field.label_tag }}
+						{{ field }}
+					</div>
+					{% endfor %}
+					<a onclick="showGenerator();" style="cursor: pointer;">generate password</a> |
+					<a onclick="showPassword();" style="cursor: pointer;" id="show">show password</a>
+					<div id="generator" class="p10" style="display: none;">
+						<h4 class="p10">Simple password generator</h4>
+						lowercase <input id="lowercase" type="checkbox" checked> |
+						uppercase <input id="uppercase" type="checkbox"> |
+						numbers <input id="numbers" type="checkbox">
+						<input id="length" type="number" value="10" placeholder="characters length" style="width: 120px !important;">
+						<button class="btn success" type="button" onclick="generate();">Generate</button>
+					</div>
+					<div class="row">
+						<button class="btn warning" type="submit">Save</button>
+					</div>
+					<div class="p10-top">
+						<a href="{% url 'entries:list' %}">&laquo; Home page</a>
+					</div>
+				</form>
+			</div>
+        </div>
+	</section>
+	<script>
+		function showGenerator()
+		{
+			var gen = document.getElementById("generator");
+			gen.style.display = "block";
+		}
+
+		function showPassword()
+		{
+			var pass = document.getElementById("id_password");
+			var link = document.getElementById("show");
+
+			if (pass.type === "password") {
+				pass.type = "text";
+				link.text = "hide password";
+			} else {
+				pass.type = "password";
+				link.text = "show password";
+			}
+			
+		}
+
+		function generate()
+		{
+			var allow_lower = document.getElementById("lowercase").checked;
+			var allow_upper = document.getElementById("uppercase").checked;
+			var allow_numbers = document.getElementById("numbers").checked;
+			var length = document.getElementById("length").value;
+
+			var lowercase = "abcdefghijklmnopqrstuvwxyz";
+			var uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+			var numbers = "0123456789";
+
+			var possible = "";
+
+			if (allow_lower) possible += lowercase;
+			if (allow_upper) possible += uppercase;
+			if (allow_numbers) possible += numbers;
+
+			var password = "";
+
+			if (! possible) return;
+
+			if (window.crypto && window.crypto.getRandomValues) {
+				values = new Uint32Array(length);
+				window.crypto.getRandomValues(values);
+
+				for (var i = 0; i < length; i++)
+					password += possible[values[i] % possible.length];
+			} else {
+				for (var i = 0; i < length; i++)
+					password += possible.charAt(Math.floor(Math.random() * possible.length));
+			}
+
+			var input = document.getElementById("id_password");
+			input.value = password;
+		}
+	</script>
+{% endblock %}
