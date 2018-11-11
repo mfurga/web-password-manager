@@ -64,11 +64,14 @@ a:hover { background: #0071c3; color: #fff; }
 
 /* BUTTONS */
 
-.error { background:#ff2424; }
-.error:hover { background: #f55757; }
+button.success { background: #20dc00; }
+button.success:hover { background: #3bff19; }
 
-.warning { background: #ffa533; }
-.warning:hover { background: #ffb65a; }
+button.warning { background: #ffa533; }
+button.warning:hover { background: #ffb65a; }
+
+button.error { background:#ff2424; }
+button.error:hover { background: #f55757; }
 
 .btn { 
     padding: 4px 5px;

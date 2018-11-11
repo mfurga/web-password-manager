@@ -19,8 +19,8 @@
             {% if user.is_authenticated %}
             <ul class="navbar-list fright">
                 <li itemprop="name">{{ request.user }}</li>
-                <li itemprop="name"><a itemprop="url" href="#">new entry</a></li>
-                <li itemprop="name"><a itemprop="url" href="#">logout</a></li>
+                <li itemprop="name"><a itemprop="url" href="{% url 'entries:create' %}">new entry</a></li>
+                <li itemprop="name"><a itemprop="url" href="{% url 'users:logout' %}">logout</a></li>
             </ul>
             {% endif %}
         </div>
