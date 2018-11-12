@@ -15,7 +15,8 @@ class ForNotLoggedOnly(UserPassesTestMixin):
 
 class SinginView(ForNotLoggedOnly, FormView):
     """
-    Sign in view.
+    The users sign in view. This view provides login authorization
+    for users.
     """
     template_name = 'users/users_signin.html'
     form_class = SigninForm
@@ -30,12 +31,12 @@ class SinginView(ForNotLoggedOnly, FormView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return self.request.GET.get('next', reverse_lazy('users:signin'))  # FIXME: redirect to home page
+        return self.request.GET.get('next', reverse_lazy('entries:list'))
 
 
 class LogoutView(LoginRequiredMixin, RedirectView):
     """
-    Logout view.
+    The users logout view. This view allows to log out of the account.
     """
     url = reverse_lazy('users:signin')
     login_url = reverse_lazy('users:signin')

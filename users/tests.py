@@ -29,8 +29,7 @@ class SigninViewTest(TestCase):
         respone = self.client.post('/account/signin/', {
             'username': 'rik', 'password': 'pass'
         })
-        # FIXME: redirect to home page & status code 200
-        self.assertRedirects(respone, '/account/signin/', target_status_code=403)
+        self.assertRedirects(respone, '/', target_status_code=200)
 
     def tearDown(self):
         self.user = None
