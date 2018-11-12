@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load decrypt %}
 
 {% block title %} Dashboard {{ block.super }}{% endblock %}
 
@@ -37,7 +38,7 @@
                             <td><a href="{{ entry.url }}" target="_blank" rel="noopener noreferrer">{{ entry.url }}</a></td>
                             <td>{{ entry.login }}</td>
                             <td class="tcenter">
-                                <input id="password-{{ entry.id}}" style="width: auto;" type="password" value="{{ entry.password }}" disabled>
+                                <input id="password-{{ entry.id}}" style="width: auto;" type="password" value="{{ entry.password | decrypt}}" disabled>
                                 <a style="font-family: monospace; cursor: pointer;" id="password-button-{{ entry.id }}" onclick="showPassword({{ entry.id }});">show</a>
                                 <a style="font-family: monospace; cursor: pointer;" onclick="copyToClipboard({{ entry.id }})">copy</a>
                             </td>

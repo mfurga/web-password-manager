@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load decrypt %}
 
 {% block title %} {{ entry.name }} {{ block.super }}{% endblock %}
 
@@ -33,7 +34,7 @@
                 <div class="row">
                     <p>
                         <span class="title">Password:</span>
-                        <input style="min-width: 200px;" type="password" value="{{ entry.password }}" id="password" disabled>
+                        <input style="min-width: 200px;" type="password" value="{{ entry.password | decrypt }}" id="password" disabled>
                         <a style="font-family: monospace; cursor: pointer;" id="password-button" onclick="showPassword();">show</a>
                         <a style="font-family: monospace; cursor: pointer;" onclick="copyToClipboard()">copy</a>
                     </p>
