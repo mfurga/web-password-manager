@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Share an entry {{ block.super }}{% endblock %}
+
+{% block content %}
+    <section id="dashboard" class="main">
+        <div class="container">
+            <header class="header">
+                <h1 class="title">Share an entry</h1>
+            </header>
+            <div class="content">
+                <p style="color: red; font-weight: bold;" class="tcenter p10">This URL gives everyone permission for this entry and is only valid for 5 minutes!</p>
+                <input style="width: 100%; padding: 10px 0px; text-align: center; font-size: 15px; font-family: Verdana, Geneva, sans-serif;" type="text" value="{{ link }}" disabled>
+                <div class="p10-top">
+                    <a href="{% url 'entries:list' %}">&laquo; Home page</a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

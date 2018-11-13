@@ -14,6 +14,7 @@
             <header class="header clear">
                 <h1 class="title fleft">{{ entry.name }}</h1>
                 <div class="row fright">
+                    <a href="{% url 'entries:share' entry.id %}"><button class="btn success">Share the entry</button></a>
                     <a href="{% url 'entries:update' entry.id %}"><button class="btn warning">Edit the entry</button></a>
                     <a href="{% url 'entries:delete' entry.id %}"><button class="btn error">Delete the entry</button></a>
                 </div>
