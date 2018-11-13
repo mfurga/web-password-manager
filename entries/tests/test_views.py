@@ -161,3 +161,61 @@ class EntryDeleteViewTest(TestCase):
             Entry.objects.get(id=self.entry.id)
         self.assertRedirects(response, reverse('entries:list'), target_status_code=200)
         self.assertIn(_('Entry successfully deleted.'), messages)
+
+
+class EntryShareViewTest(TestCase):
+    """The tests for the entry share view."""
+
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create_user(username='rik', password='pass')
+        self.entry = Entry.objects.create(name='facebook', url='https://facebook.com',
+                                          login='rik', password='password')
+
+    def test_not_logged_user_entry_share(self):
+        response = self.client.get(reverse('entries:share', args=[self.entry.id]))
+        self.assertRedirects(response, f'/account/signin/?next={reverse("entries:share", args=[self.entry.id])}',
+                             target_status_code=200)
+
+    def test_logged_user_entry_share(self):
+        self.client.force_login(self.user, backend=None)
+        response = self.client.get(reverse('entries:share', args=[self.entry.id]))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'entries/entries_share.html')
+
+    def test_logged_user_entry_share_pk_as_string(self):
+        self.client.force_login(self.user, backend=None)
+        response = self.client.get('/entry/asdf/share/')
+        self.assertEqual(response.status_code, 404)
+
+
+class EntryShareCheckViewTest(TestCase):
+    """The tests for the entry share check view."""
+
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create_user(username='rik', password='pass')
+        self.entry = Entry.objects.create(name='facebook', url='https://facebook.com',
+                                          login='rik', password='password')
+
+    def test_not_logged_user_entry_share_check(self):
+        self.client.force_login(self.user, backend=None)
+        response = self.client.get(reverse('entries:share', args=[self.entry.id]))
+        link = response.context['link']
+        self.client.logout()
+        response = self.client.get(link)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'entries/entries_detail.html')
+        self.assertContains(response, 'facebook')
+
+    def test_not_logged_user_entry_share_check_invalid_data(self):
+        response = self.client.get('/entry/share/amsa87afbf8327/12531212/12/')
+        self.assertEqual(response.status_code, 404)
+
+    def test_not_logged_user_entry_share_check_invalid_pk(self):
+        self.client.force_login(self.user, backend=None)
+        response = self.client.get(reverse('entries:share', args=[self.entry.id]))
+        link = response.context['link'].replace('/1/', '/123/')
+        self.client.logout()
+        response = self.client.get(link)
+        self.assertEqual(response.status_code, 404)
