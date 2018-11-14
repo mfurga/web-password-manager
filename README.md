@@ -1,4 +1,4 @@
-# Web Password Manager
+# Web Password Manager 
 > Simple web password manager implemented using [Django Web Framework](https://www.djangoproject.com/).
 
 [![Build Status](https://travis-ci.org/mfurga/chip8.svg?branch=master)](https://travis-ci.org/mfurga/web-password-manager)
@@ -6,8 +6,10 @@
 [![Django](https://img.shields.io/badge/django-2.1.3-green.svg)](https://www.djangoproject.com/)
 [![License MIT](https://img.shields.io/badge/license-MIT-%237900CA.svg)](https://github.com/mfurga/web-password-manager/blob/master/LICENSE)
 
+Demo: https://web-password-manager.herokuapp.com/
+
 ## Overview
-Simple web-based password manager written using Django Web Framework & pycrypto library. Allows to create a new entry, edit the entry, delete the entry and share the entry using a special URL, which is valid only for 5 minutes. It uses also the AES algorithm to deal with passwords storage in the database.
+Simple web-based password manager written using Django Web Framework & pycrypto library. Allows to create a new entry, edit the entry, delete the entry and share the entry using a special URL, which is valid only for 5 minutes. It also uses the AES algorithm to deal with passwords storage in the database.
 
 ![Manager Image](https://raw.githubusercontent.com/mfurga/web-password-manager/master/demo.png)
 
