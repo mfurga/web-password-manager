@@ -13,7 +13,7 @@ class Crypto(object):
 
     def __init__(self, key: str = PRIVATE_SECRET_KEY) -> None:
         self.bs = 16
-        self.cipher = AES.new(key, AES.MODE_ECB)
+        self.cipher = AES.new(key.encode(), AES.MODE_ECB)
 
     def _pad(self, text: str) -> str:
         return text + (self.bs - len(text) % self.bs) * chr(self.bs - len(text) % self.bs)
@@ -22,7 +22,7 @@ class Crypto(object):
         return text[:-ord(text[len(text) - 1:])]
 
     def encrypt(self, password: str) -> str:
-        encrypted = self.cipher.encrypt(self._pad(password))
+        encrypted = self.cipher.encrypt(self._pad(password).encode())
         encoded = base64.b64encode(encrypted)
         return str(encoded, 'utf-8')
 
