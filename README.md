@@ -22,7 +22,7 @@ Simple web-based password manager written using Django Web Framework & pycrypto 
 
 - [Django 2.1.3](https://www.djangoproject.com/)
 - [Python 3.7](https://www.python.org/downloads/)
-- [Pycrypto 2.6.x](https://pypi.org/project/pycrypto/)
+- [Pycryptodome 3.18.x](https://pypi.org/project/pycryptodome/)
 
 You can also easly install the require packages using the following command:
 ```
@@ -33,8 +33,6 @@ Then run the server:
 export SECRET_KEY="<secret here>"  # use `set` command for Windows
 python manage.py runserver 0.0.0.0:8000
 ```
-
-Done! 😊
 
 ## License
 MIT © Mateusz Furga
