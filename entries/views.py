@@ -1,10 +1,15 @@
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic import (ListView, DetailView, CreateView,
-                                  UpdateView, DeleteView)
+                                  UpdateView, DeleteView, View)
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.translation import ugettext as _
 from django.urls import reverse, reverse_lazy
+from django.http import Http404
+from django.conf import settings
 from django.contrib import messages
+from django.shortcuts import render
+import hashlib
+import time
 
 from .models import Entry
 from .forms import EntryForm
@@ -82,3 +87,53 @@ class EntryDeleteView(LoginRequiredMixin, DeleteView):
     def delete(self, request, *args, **kwargs):
         messages.success(request, _('Entry successfully deleted.'))
         return super().delete(request, *args, **kwargs)
+
+
+class EntryShareView(LoginRequiredMixin, View):
+    """
+    The entry share view. This view is used to create a URL that allows
+    access to a specific entry.
+
+    URL FORMAT:
+        http://exmaple.com/entry/share/<hash>/<time>/<pk>/
+    WHERE:
+        * hash - MD5 hash of (`SHARE_SECRET_SALT` + expiration time + pk).
+        * time - time of entry expiry (UNIX timestamp in seconds).
+        * pk - primary key of the entry.
+    """
+
+    def get(self, request, *args, **kwargs):
+        SHARE_SECRET_SALT = settings.SHARE_SECRET_SALT
+
+        expiration_time = int(time.time()) + 5 * 60
+        to_hash = '{salt}{time}{pk}'.format(salt=SHARE_SECRET_SALT,
+                                            time=expiration_time,
+                                            pk=kwargs['pk'])
+        link_hash = hashlib.md5(to_hash.encode('utf-8')).hexdigest()
+
+        link = reverse('entries:share-check',
+                       kwargs={'hash': link_hash, 'time': expiration_time, 'pk': kwargs['pk']})
+        link = request.build_absolute_uri(link)
+        return render(request, 'entries/entries_share.html', {'link': link})
+
+
+class EntryShareCheckView(View):
+    """
+    The entry share check view. This view is used to validate a shared
+    URL and gives permission to a specific entry.
+    """
+
+    def get(self, request, *args, **kwargs):
+        SHARE_SECRET_SALT = settings.SHARE_SECRET_SALT
+
+        url_hash, url_time, url_pk = kwargs['hash'], kwargs['time'], kwargs['pk']
+        to_hash = '{salt}{time}{pk}'.format(salt=SHARE_SECRET_SALT,
+                                            time=url_time,
+                                            pk=url_pk)
+        link_hash = hashlib.md5(to_hash.encode('utf-8')).hexdigest()
+
+        if link_hash != url_hash or (int(time.time()) - url_time) > 0:
+            raise Http404
+
+        entry = Entry.objects.get(pk=kwargs['pk'])
+        return render(request, 'entries/entries_detail.html', {'entry': entry})
